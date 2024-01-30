@@ -1,10 +1,10 @@
-const axios = require("axios");
-const dotenv = require("dotenv");
+import axios from "axios";
+import dotenv from "dotenv";
 
 // Load environment variables from .env file
 dotenv.config({ path: "./.env" }); // Make sure the path is correct
 
-async function main(prompt) {
+export async function main(prompt) {
   console.log("Prompt:", prompt);
   console.log("Model:", process.env.model_name);
 
@@ -27,9 +27,7 @@ async function main(prompt) {
     };
 
     // Send POST request using axios
-    const response = await axios.post(endpoint, payload, {
-      headers,
-    });
+    const response = await axios.post(endpoint, payload, { headers });
 
     // Output the response data
     console.log(response.data);

@@ -23,6 +23,12 @@ const commands = [
   new SlashCommandBuilder()
     .setName("chatbot")
     .setDescription("Chat with the bot")
+    .addStringOption((option) =>
+      option
+        .setName("prompt")
+        .setDescription("Prompt for the chatbot")
+        .setRequired(true)
+    )
     .toJSON(),
 ];
 
@@ -35,7 +41,7 @@ const rest = new REST().setToken(process.env.DISCORD_TOKEN);
     );
 
     const data = await rest.put(
-      Routes.applicationGuildCommands(process.env.APP_ID, "977918915948728390"),
+      Routes.applicationGuildCommands(process.env.APP_ID, process.env.GUILD_ID),
       { body: commands }
     );
 
@@ -58,20 +64,29 @@ client.on("interactionCreate", async (interaction) => {
       ephemeral: false, // This message needs to be non-ephemeral to start a thread
     });
 
+    // Get the prompt from the user
+    const prompt = interaction.options.getString("prompt");
+    const user = interaction.user;
+    console.log(user);
+
     // Starting a thread from the bot's message
     const thread = await message.startThread({
-      name: "your question",
+      name: prompt,
       autoArchiveDuration: 60,
       type: ChannelType.PrivateThread,
       reason: "Needed a separate thread for food",
     });
 
     // Send a message to the thread
-    thread.send("Hello world!");
+    // thread.send(`Hello, ${}`);
+
+    // Send a message to the thread using the flock-api.js file
+    // const response = await main(prompt);
+    // thread.send(response.answer);
 
     // Optionally, you can inform the user that the thread has been created with an ephemeral follow-up message
     await interaction.followUp({
-      content: "Your personal thread 'food-talk' is ready!",
+      content: `Your personal thread ${prompt} is ready!`,
       ephemeral: true,
     });
   }

@@ -6,7 +6,7 @@ dotenv.config({ path: "./.env" }); // Make sure the path is correct
 
 export async function main(prompt) {
   console.log("Prompt:", prompt);
-  console.log("Model:", process.env.model_name);
+  console.log("Model:", process.env.MODEL_NAME);
 
   try {
     // Construct the request payload
@@ -17,13 +17,13 @@ export async function main(prompt) {
     };
 
     // Set the headers
-    const endpoint = process.env.endpoint; // Ensure endpoint is defined
+    const endpoint = process.env.ENDPOINT; // Ensure endpoint is defined
     if (!endpoint) {
       throw new Error("Endpoint is not defined in the environment variables.");
     }
 
     const headers = {
-      "x-api-key": process.env.api_key, // Ensure API key is set in .env
+      "x-api-key": process.env.FLOCK_API_KEY, // Ensure API key is set in .env
     };
 
     // Send POST request using axios

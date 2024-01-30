@@ -78,7 +78,7 @@ client.on("interactionCreate", async (interaction) => {
     });
 
     // Send a message to the thread
-    // thread.send(`Hello, ${}`);
+    // thread.send(`Hello, ${user.globalName}`);
 
     // Send a message to the thread using the flock-api.js file
     // const response = await main(prompt);

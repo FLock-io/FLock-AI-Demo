@@ -81,8 +81,8 @@ client.on("interactionCreate", async (interaction) => {
     // thread.send(`Hello, ${user.globalName}`);
 
     // Send a message to the thread using the flock-api.js file
-    // const response = await main(prompt);
-    // thread.send(response.answer);
+    const response = await main(prompt);
+    thread.send(response.answer);
 
     // Optionally, you can inform the user that the thread has been created with an ephemeral follow-up message
     await interaction.followUp({

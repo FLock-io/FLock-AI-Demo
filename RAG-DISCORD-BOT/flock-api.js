@@ -13,7 +13,7 @@ export async function main(prompt) {
     const payload = {
       question: prompt,
       chat_history: [],
-      knowledge_source_id: "string", // Replace with actual ID if needed
+      knowledge_source_id: process.env.MODEL_NAME,
     };
 
     // Set the headers
@@ -27,17 +27,18 @@ export async function main(prompt) {
     };
 
     // Send POST request using axios
-    const response = await axios.post(endpoint, payload, { headers });
+    const response = await axios.post(
+      `${endpoint}/chat/conversational_rag_chat`,
+      payload,
+      {
+        headers,
+      }
+    );
 
     // Output the response data
     console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error:", error);
-
-    return {
-      answer: "Sorry, I don't know.",
-      score: 0,
-    };
   }
 }

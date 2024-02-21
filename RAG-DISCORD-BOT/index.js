@@ -16,8 +16,6 @@ client.on("ready", () => {
   console.log(`${client.user.tag} has logged in.`);
 });
 
-const IGNORE_PREFIX = "!";
-const CHANNEL_ID = "979734128054394960";
 
 const commands = [
   new SlashCommandBuilder()

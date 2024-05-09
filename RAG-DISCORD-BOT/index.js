@@ -1,4 +1,3 @@
-import dotenv from "dotenv/config";
 import { main } from "./flock-api.js";
 import {
   Client,
@@ -12,10 +11,11 @@ const client = new Client({
   intents: ["Guilds", "GuildMessages", "GuildMembers", "MessageContent"],
 });
 
+const chatHistories = [];
+
 client.on("ready", () => {
   console.log(`${client.user.tag} has logged in.`);
 });
-
 
 const commands = [
   new SlashCommandBuilder()
@@ -78,16 +78,25 @@ client.on("interactionCreate", async (interaction) => {
     // Send a message to the thread
     // thread.send(`Hello, ${user.globalName}`);
 
-    // Send a message to the thread using the flock-api.js file
-    const response = await main(prompt);
-    thread.send(response.answer);
+    const chatHistory = chatHistories || [];
+
+    const response = await main(prompt, chatHistory);
+
+    // Update chat history
+
+    chatHistories.push(response);
 
     // Optionally, you can inform the user that the thread has been created with an ephemeral follow-up message
     await interaction.followUp({
       content: `Your personal thread ${prompt} is ready!`,
       ephemeral: true,
     });
+
+    // // Reply in the thread
+    if (interaction.replied || interaction.deferred) {
+      await interaction.followUp(response.answer);
+    } else {
+      await interaction.reply(response.answer);
+    }
   }
 });
-
-client.login(process.env.DISCORD_TOKEN);

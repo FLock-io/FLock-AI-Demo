@@ -1,0 +1,19 @@
+{
+  "name": "flock-far-frog",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "frog dev"
+  },
+  "dependencies": {
+    "@hono/node-server": "latest",
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "frog": "latest",
+    "hono": "^4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.8",
+    "typescript": "latest"
+  }
+}

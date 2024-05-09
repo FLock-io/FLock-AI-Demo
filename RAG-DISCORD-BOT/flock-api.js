@@ -4,15 +4,12 @@ import dotenv from "dotenv";
 // Load environment variables from .env file
 dotenv.config({ path: "./.env" }); // Make sure the path is correct
 
-export async function main(prompt) {
-  console.log("Prompt:", prompt);
-  console.log("Model:", process.env.MODEL_NAME);
-
+export async function main(prompt, chatHistory) {
   try {
     // Construct the request payload
     const payload = {
       question: prompt,
-      chat_history: [],
+      chat_history: chatHistory,
       knowledge_source_id: process.env.MODEL_NAME,
     };
 
